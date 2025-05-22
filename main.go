@@ -29,6 +29,10 @@ import (
 )
 
 func main() {
+        viper.SetConfigName("config")
+	viper.SetConfigType("yaml") // or json, toml, etc.
+	viper.AddConfigPath(".")    // look in the current directory
+        
 
 	viper.SetDefault("dns.address", "0.0.0.0:5354")
 	viper.SetDefault("dns.domain", "smsc.hacom.e164.sco.")
@@ -49,6 +53,11 @@ func main() {
 	Trace := log.New(os.Stderr,
 		"TRACE: ",
 		log.Ldate|log.Ltime|log.Lshortfile)
+
+        err := viper.ReadInConfig() // Find and read the config file
+        if err != nil { // Handle errors reading the config file
+                Error.Printf("fatal error config file: %w", err)
+        }
 
 	// Memory
 	backend, err := memory.NewMemoryBackend()
