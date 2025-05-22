@@ -30,8 +30,8 @@ import (
 
 func main() {
 
-	viper.SetDefault("dns.address", "127.0.0.1:5354")
-	viper.SetDefault("dns.domain", "e164.arpa.")
+	viper.SetDefault("dns.address", "0.0.0.0:5354")
+	viper.SetDefault("dns.domain", "smsc.hacom.e164.sco.")
 
 	// Initialize the loggers.
 	Info := log.New(os.Stdout,
@@ -61,8 +61,8 @@ func main() {
 		Lower: 100000000000000,
 		Upper: 999999999999999,
 		Records: []enum.Record{
-			{Regexp: "!^(.*)$!sip:\\@default!", Service: "E2U+sip",
-				Preference: 100, Replacement: ".", Order: 10},
+			{Regexp: "!^.*$!tel:5515281412;npdi;rn=1181185515281412!", Service: "E2U+PSTN:tel",
+				Preference: 100, Replacement: "*.", Order: 10},
 		},
 	})
 
